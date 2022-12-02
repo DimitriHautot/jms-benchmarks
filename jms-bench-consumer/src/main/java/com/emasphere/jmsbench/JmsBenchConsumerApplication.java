@@ -22,62 +22,29 @@ public class JmsBenchConsumerApplication {
         SpringApplication.run(JmsBenchConsumerApplication.class, args);
     }
 
-    @JmsListener(destination = "#{queue.queueName}", concurrency = "2")
+//    @JmsListener(destination = "#{c01queue.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue00.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue01.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue02.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue03.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue04.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue05.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue06.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue07.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue08.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c01queue09.queueName}", concurrency = "2")
+//    @JmsListener(destination = "#{c02queue.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue00.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue01.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue02.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue03.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue04.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue05.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue06.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue07.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue08.queueName}", concurrency = "2")
+    @JmsListener(destination = "#{c02queue09.queueName}", concurrency = "2")
     public void read(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue00.queueName}", concurrency = "2")
-    public void read00(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue01.queueName}", concurrency = "2")
-    public void read01(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue02.queueName}", concurrency = "2")
-    public void read02(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue03.queueName}", concurrency = "2")
-    public void read03(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue04.queueName}", concurrency = "2")
-    public void read04(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue05.queueName}", concurrency = "2")
-    public void read05(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue06.queueName}", concurrency = "2")
-    public void read06(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue07.queueName}", concurrency = "2")
-    public void read07(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue08.queueName}", concurrency = "2")
-    public void read08(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    @JmsListener(destination = "#{queue09.queueName}", concurrency = "2")
-    public void read09(String message, @Header(name = JmsHeaders.DESTINATION) String destination) throws InterruptedException {
-        handle(message, destination);
-    }
-
-    private void handle(String message, String destination) throws InterruptedException {
         Thread.sleep(sleepLowerBoundary + random.nextInt(sleepMaximumDelta));
         logger.info("Read message [{}] from {}", message, destination);
     }

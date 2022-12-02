@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 
+import javax.jms.Destination;
 import javax.jms.Topic;
 import java.util.List;
 import java.util.Random;
@@ -14,28 +15,37 @@ public class Task implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(Task.class);
 
     private final Random random = new Random();
-    private final int count;
+    private final int totalMessages;
     private final List<Topic> topics;
     private final JmsTemplate jmsTemplate;
-    private final int threadNumber;
+    private final Destination gruyere;
+    private final int reportFrequency;
 
-    public Task(int count, List<Topic> topics, JmsTemplate jmsTemplate, int threadNumber) {
-        this.count = count;
+    public Task(int totalMessages, List<Topic> topics, JmsTemplate jmsTemplate, Destination gruyere, int reportFrequency) {
+        this.totalMessages = totalMessages;
         this.topics = topics;
         this.jmsTemplate = jmsTemplate;
-        this.threadNumber = threadNumber;
+        this.gruyere = gruyere;
+        this.reportFrequency = reportFrequency;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < count; i++) {
-            Topic topic = topics.get(random.nextInt(10));
-            jmsTemplate.convertAndSend(topic, String.format("%05d - ", i).concat(tenUuids()));
+        for (int loop = 0; loop < totalMessages; loop++) {
+            Topic topic = topics.get(random.nextInt(topics.size()));
+            jmsTemplate.convertAndSend(topic, String.format("%05d - %s", loop, tenUuids()));
 
-            // uncomment to build the gruyère
-            jmsTemplate.convertAndSend("nle.storage", String.format("%05d - ", i).concat(tenUuids()));
+            if (gruyere != null) {
+                jmsTemplate.convertAndSend(gruyere, String.format("%05d - %s", loop, tenUuids()));
+            }
 
-            logger.info("{} published 2 messages ({} and 🧀)", threadNumber, topic);
+            if (reportFrequency > 0 && loop > 0 && loop % this.reportFrequency == 0) {
+                if (gruyere != null) {
+                    logger.info("[{}] published {} messages (random topic & 🧀)", Thread.currentThread().getName(), loop);
+                } else {
+                    logger.info("[{}] published {} messages (random topic)", Thread.currentThread().getName(), loop);
+                }
+            }
         }
     }
 
