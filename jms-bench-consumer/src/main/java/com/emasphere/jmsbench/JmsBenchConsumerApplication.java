@@ -15,8 +15,8 @@ public class JmsBenchConsumerApplication {
     private static final Logger logger = LoggerFactory.getLogger(JmsBenchConsumerApplication.class);
     private final Random random = new Random();
 
-    private static final long sleepLowerBoundary = 2_000L;
-    private static final int sleepMaximumDelta = 1_000;
+    private static final long sleepLowerBoundary = 0L;
+    private static final int sleepMaximumDelta = 100;
 
     public static void main(String[] args) {
         SpringApplication.run(JmsBenchConsumerApplication.class, args);
