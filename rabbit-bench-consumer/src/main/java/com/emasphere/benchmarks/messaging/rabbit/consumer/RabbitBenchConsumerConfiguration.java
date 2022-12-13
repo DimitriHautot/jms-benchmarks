@@ -24,6 +24,14 @@ public class RabbitBenchConsumerConfiguration {
     }
 
     @Bean
+    public Binding c01binding00() {
+        return new Binding("c01.unified-job.log-00", DestinationType.QUEUE, "amq.topic", "unified-job.log-00", null);
+    }
+    @Bean
+    public Binding c02binding00() {
+        return new Binding("c02.unified-job.log-00", DestinationType.QUEUE, "amq.topic", "unified-job.log-00", null);
+    }
+    @Bean
     public Queue c01queue00() {
         return new Queue("c01.unified-job.log-00");
     }
@@ -32,12 +40,12 @@ public class RabbitBenchConsumerConfiguration {
         return new Queue("c02.unified-job.log-00");
     }
     @Bean
-    public Binding c01binding00() {
-        return new Binding("c01.unified-job.log-00", DestinationType.QUEUE, "amq.topic", "unified-job.log-00", null);
+    public Binding c01binding01() {
+        return new Binding("c01.unified-job.log-01", DestinationType.QUEUE, "amq.topic", "unified-job.log-01", null);
     }
     @Bean
-    public Binding c02binding00() {
-        return new Binding("c02.unified-job.log-00", DestinationType.QUEUE, "amq.topic", "unified-job.log-00", null);
+    public Binding c02binding01() {
+        return new Binding("c02.unified-job.log-01", DestinationType.QUEUE, "amq.topic", "unified-job.log-01", null);
     }
     @Bean
     public Queue c01queue01() {
@@ -174,5 +182,13 @@ public class RabbitBenchConsumerConfiguration {
     @Bean
     public Queue c02queue09() {
         return new Queue("c02.unified-job.log-09");
+    }
+    @Bean
+    public Binding allEventsBinding() {
+        return new Binding("com.emasphere.integration.queue.all.events", DestinationType.QUEUE, "amq.topic", "#", null);
+    }
+    @Bean
+    public Queue allEventsQueue() {
+        return new Queue("com.emasphere.integration.queue.all.events");
     }
 }
